@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Aquí deben estar midpapi20.jar y cldcapi10.jar
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+java {
+    // Forzamos compatibilidad con Java 1.3/1.4 (lo máximo que entiende J2ME)
+    // Aunque uses un JDK moderno para compilar, el bytecode será antiguo.
+    sourceCompatibility = JavaVersion.VERSION_1_4
+    targetCompatibility = JavaVersion.VERSION_1_4
+}
+
+tasks.withType(JavaCompile) {
+    // Desactivamos las librerías estándar de Java moderno para evitar conflictos
+    // con las clases de MicroEdition (javax.microedition.*)
+    options.compilerArgs << "-Xlint:-options" << "-bootclasspath" << "libs/midpapi20.jar:libs/cldcapi10.jar"
+}
+
+jar {
+    archiveFileName = "Sonic2Dash.jar"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    // Incluimos los recursos (imágenes, sonidos, etc.) en el JAR
+    from(sourceSets.main.resources) {
+        include "**/*"
+    }
+
+    manifest {
+        attributes(
+                'Manifest-Version': '1.0',
+                'MIDlet-1': 'Sonic the Hedgehog 2 Dash,/icon.png,STH2P1.STH2P1',
+                'MIDlet-Name': 'Sonic the Hedgehog 2 Dash',
+                'MIDlet-Version': '1.0.0',
+                'MIDlet-Vendor': 'SEGA/BiNPDA',
+                'MicroEdition-Configuration': 'CLDC-1.1',
+                'MicroEdition-Profile': 'MIDP-2.0'
+        )
+    }
+}
