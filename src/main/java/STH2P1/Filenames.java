@@ -3,67 +3,123 @@ package STH2P1;
 public interface Filenames {
     // 128x128 Genesis Chunks Equivalent
     String[] MAP_FILENAME = new String[]{
-            "/MAP00.bin", "/MAP00.bin", "", "",
-            "/MAP04.bin", "/MAP04.bin", "/MAP10.bin", "/MAP00.bin",
-            "", "", "/MAP0A.bin", "/MAP0B.bin",
-            "/MAP0C.bin", "/MAP0D.bin", "/MAP0D.bin", "/MAP0F.bin", "/MAP10.bin"
+            "/MAP00.bin",  // Emerald Hill Zone 
+            "/MAP00.bin",  // Zone 1 (Used In Ending)
+            "",            // Zone 2 (Leftover From Genesis Version)
+            "",            // Zone 3 (Leftover From Genesis Version)
+            "/MAP04.bin",  // Metropolis (Unused Here, Files Dont Exist)
+            "/MAP04.bin",  // Metropolis Act 3 (Unused Here, Files Dont Exist)
+            "/MAP10.bin",  // Wing Fortress (Unused Here, Files Dont Exist)
+            "/MAP00.bin",  // Hill Top
+            "",            // Zone 8 (Leftover From Genesis Version)
+            "",            // Zone 9 (Leftover From Genesis Version)
+            "/MAP0A.bin",  // Oil Ocean (Unused Here, Files Dont Exist)
+            "/MAP0B.bin",  // Mystic Cave (Unused Here, Files Dont Exist)
+            "/MAP0C.bin",  // Casino Night
+            "/MAP0D.bin",  // Chemical Plant
+            "/MAP0D.bin",  // Death Egg (Unused Here, Files Dont Exist)
+            "/MAP0F.bin",  // Acuatic Ruin
+            "/MAP10.bin"   // Sky Chase (Unused Here, Files Dont Exist)
     };
     // Layout Genesis Equivalent
     String[][] ZONEMAP_FILENAME = new String[][]{
-            {"/ZONE000C.bin", "/ZONE001C.bin"},
-            new String[0],
-            new String[0],
-            new String[0],
-            {"/ZONE040C.bin", "/ZONE041C.bin"},
-            {"/ZONE050C.bin"},
-            {"/ZONE060C.bin"},
-            {"/ZONE070C.bin", "/ZONE071C.bin"},
-            new String[0],
-            new String[0],
-            {"/ZONE0A0C.bin", "/ZONE0A1C.bin"},
-            {"/ZONE0B0C.bin", "/ZONE0B1C.bin"},
-            {"/ZONE0C0C.bin", "/ZONE0C1C.bin"},
-            {"/ZONE0D0C.bin", "/ZONE0D1C.bin"},
-            {"/ZONE0E0C.bin"},
-            {"/ZONE0F0C.bin", "/ZONE0F1C.bin"},
-            {"/ZONE100C.bin"}
+            {"/ZONE000C.bin", "/ZONE001C.bin"}, // Emerald Hill Act 1-2
+            new String[0],                      // Zone 1 (It is not used because it is hardcoded; see loadMapData in GameState.java for more information)
+            new String[0],                      // Zone 2 (Leftover From Genesis Version)
+            new String[0],                      // Zone 3 (Leftover From Genesis Version)
+            {"/ZONE040C.bin", "/ZONE041C.bin"}, // Metropolis Act 1-2 (Unused Here, Files Dont Exist)
+            {"/ZONE050C.bin"},                  // Metropolis Act 3 (Unused Here, File Dont Exist, Act 2 pointer removed from the Genesis version)
+            {"/ZONE060C.bin"},                  // Wing Fortress (Unused Here, File Dont Exist, Act 2 pointer removed from the Genesis version)
+            {"/ZONE070C.bin", "/ZONE071C.bin"}, // Hill Top Act 1-2
+            new String[0],                      // Zone 8 (Leftover From Genesis Version)
+            new String[0],                      // Zone 9 (Leftover From Genesis Version)
+            {"/ZONE0A0C.bin", "/ZONE0A1C.bin"}, // Oil Ocean Act 1-2 (Unused Here, Files Dont Exist)
+            {"/ZONE0B0C.bin", "/ZONE0B1C.bin"}, // Mystic Cave (Unused Here, Files Dont Exist)
+            {"/ZONE0C0C.bin", "/ZONE0C1C.bin"}, // Casino Night Act 1-2
+            {"/ZONE0D0C.bin", "/ZONE0D1C.bin"}, // Chemical Plant Act 1-2
+            {"/ZONE0E0C.bin"},                  // Death Egg (Unused Here, File Dont Exist, Act 2 pointer removed from the Genesis version)
+            {"/ZONE0F0C.bin", "/ZONE0F1C.bin"}, // Acuatic Ruin Act 1-2
+            {"/ZONE100C.bin"}                   // Sky Chase (Unused Here, File Dont Exist, Act 2 pointer removed from the Genesis version)
     };
 
     String[] PRI_FILENAME = new String[]{
-            "/PRI00.bin", "/PRI07.bin", "", "",
-            "/PRI04.bin", "/PRI04.bin", "/PRI06.bin", "/PRI07.bin",
-            "", "", "/PRI0A.bin", "/PRI0B.bin",
-            "/PRI0C.bin", "/PRI0D.bin", "/PRI0E.bin", "/PRI0F.bin", "/PRI10.bin"
+            "/PRI00.bin",  // Emerald Hill
+            "/PRI07.bin",  // Zone 1 (Used In Ending)
+            "",            // Zone 2 (Leftover From Genesis Version)
+            "",            // Zone 3 (Leftover From Genesis Version)
+            "/PRI04.bin",  // Metropolis (Unused Here, Files Dont Exist)
+            "/PRI04.bin",  // Metropolis Act 3 (Unused Here, Files Dont Exist)
+            "/PRI06.bin",  // Wing Fortress (Unused Here, Files Dont Exist)
+            "/PRI07.bin",  // Hill Top
+            "",            // Zone 8
+            "",            // Zone 9
+            "/PRI0A.bin",  // Oil Ocean (Unused Here, Files Dont Exist)
+            "/PRI0B.bin",  // Mystic Cave (Unused Here, Files Dont Exist)
+            "/PRI0C.bin",  // Casino Night
+            "/PRI0D.bin",  // Chemical Plant
+            "/PRI0E.bin",  // Death Egg (Unused Here, Files Dont Exist)
+            "/PRI0F.bin",  // Acuatic Ruin
+            "/PRI10.bin"   // Sky Chase (Unused Here, Files Dont Exist)
     };
-
+    // Tile Maps
     String[] TILEMAP_FILENAME = new String[]{
-            "/TILE00.bin", "/TILE07.bin", "", "", "", "", "", "/TILE07.bin",
-            "", "", "", "", "/TILE0C.bin", "/TILE0D.bin", "", "/TILE0F.bin", ""
+            "/TILE00.bin", // Emerald Hill
+            "/TILE07.bin", // Zone 1 (Used In Ending)
+            "",            // Zone 2 (Leftover From Genesis Version)
+            "",            // Zone 3 (Leftover From Genesis Version)
+            "",            // Metropolis (Deleted)
+            "",            // Metropolis Act 3 (Deleted)
+            "",            // Wing Fortress (Deleted)
+            "/TILE07.bin", // Hill Top
+            "",            // Zone 8 (Leftover From Genesis Version)
+            "",            // Zone 9 (Leftover From Genesis Version)
+            "",            // Oil Ocean (Deleted)
+            "",            // Mystic Cave (Deleted)
+            "/TILE0C.bin", // Casino Night
+            "/TILE0D.bin", // Chemical Plant
+            "",            // Death Egg (Deleted)
+            "/TILE0F.bin", // Acuatic Ruin
+            ""             // Sky Chase (Deleted)
     };
-
+    // Tiles
     String[] BLK_FILENAME = new String[]{
-            "/EMERALD_HILL.png", "/HILL_TOP.png", "", "", "", "", "", "/HILL_TOP.png",
-            "", "", "", "", "/CASINO_NIGHT.png", "/CHEMICAL_PLANT.png", "", "/AQUATIC_RUIN.png", ""
+            "/EMERALD_HILL.png",   // Emerald Hill Tiles
+            "/HILL_TOP.png",       // Zone 1 Tiles (Used In Ending)
+            "",                    // Zone 2 Tiles (Leftover From Genesis Version)
+            "",                    // Zone 3 Tiles (Leftover From Genesis Version)
+            "",                    // Metropolis Tiles (Deleted)
+            "",                    // Metropolis Act 3 Tiles (Deleted)
+            "",                    // Wing Fortress Tiles (Deleted)  
+            "/HILL_TOP.png",       // Hill Top Tiles 
+            "",                    // Zone 8 Tiles (Leftover From Genesis Version)
+            "",                    // Zone 9 Tiles (Leftover From Genesis Version)
+            "",                    // Oil Ocean Tiles (Deleted)
+            "",                    // Mystic Cave Tiles (Deleted)
+            "/CASINO_NIGHT.png",   // Casino Night Tiles 
+            "/CHEMICAL_PLANT.png", // Chemical Plant Tiles
+            "",                    // Death Egg Tiles (Deleted)
+            "/AQUATIC_RUIN.png",   // Acuatic Ruin Tiles
+            ""                     // Sky Chase (Deleted)
     };
-
+    // Collisions
     String[][] SC_FILENAME = new String[][]{
-            {"/ZONE00SC.bin", "/ZONE00SB.bin"},
-            {"/ZONE00SC.bin", "/ZONE00SB.bin"},
-            new String[0],
-            new String[0],
-            {"/ZONE04SC.bin", "/ZONE04SC.bin"},
-            {"/ZONE04SC.bin", "/ZONE04SC.bin"},
-            {"/ZONE10SC.bin", "/ZONE10SB.bin"},
-            {"/ZONE00SC.bin", "/ZONE00SB.bin"},
-            new String[0],
-            new String[0],
-            {"/ZONE0ASC.bin", "/ZONE0ASC.bin"},
-            {"/ZONE0BSC.bin", "/ZONE0BSC.bin"},
-            {"/ZONE0CSC.bin", "/ZONE0CSB.bin"},
-            {"/ZONE0DSC.bin", "/ZONE0DSB.bin"},
-            {"/ZONE0DSC.bin", "/ZONE0DSB.bin"},
-            {"/ZONE0FSC.bin", "/ZONE0FSB.bin"},
-            {"/ZONE10SC.bin", "/ZONE10SB.bin"}
+            {"/ZONE00SC.bin", "/ZONE00SB.bin"}, // Emerald Hill
+            {"/ZONE00SC.bin", "/ZONE00SB.bin"}, // Zone 1 (Used In Ending)
+            new String[0],                      // Zone 2 (Leftover From Genesis Version)
+            new String[0],                      // Zone 3 (Leftover From Genesis Version)
+            {"/ZONE04SC.bin", "/ZONE04SC.bin"}, // Metropolis (Unused Here, Files Dont Exist)
+            {"/ZONE04SC.bin", "/ZONE04SC.bin"}, // Metropolis Act 3 (Unused Here, Files Dont Exist)
+            {"/ZONE10SC.bin", "/ZONE10SB.bin"}, // Wing Fortress (Unused Here, Files Dont Exist)
+            {"/ZONE00SC.bin", "/ZONE00SB.bin"}, // Hill Top
+            new String[0],                      // Zone 8 (Leftover From Genesis Version)
+            new String[0],                      // Zone 9 (Leftover From Genesis Version)
+            {"/ZONE0ASC.bin", "/ZONE0ASC.bin"}, // Oil Ocean (Unused Here, Files Dont Exist)
+            {"/ZONE0BSC.bin", "/ZONE0BSC.bin"}, // Mystic Cave (Unused Here, Files Dont Exist)
+            {"/ZONE0CSC.bin", "/ZONE0CSB.bin"}, // Casino Night
+            {"/ZONE0DSC.bin", "/ZONE0DSB.bin"}, // Chemical Plant
+            {"/ZONE0DSC.bin", "/ZONE0DSB.bin"}, // Death Egg (Unused Here, Files Dont Exist)
+            {"/ZONE0FSC.bin", "/ZONE0FSB.bin"}, // Acuatic Ruin
+            {"/ZONE10SC.bin", "/ZONE10SB.bin"}  // Sky Chase (Unused Here, Files Dont Exist)
     };
 
     String[] FILENAMES = new String[]{
@@ -145,22 +201,45 @@ public interface Filenames {
             "/MUTEKI_MARUTBL.bin", "/MUTEKI_PCTBL.bin", "/SSFX_Table.bin",
             "/ZONE_Table.bin", "/ZONE_STAGETBL.bin"
     };
-
+    // Objects Layout
     String[][] ACTION_FILENAME = new String[][]{
-            {"/ST0_0.bin", "/ST0_1.bin"}, {"/ST1_0.bin"}, new String[0], new String[0],
-            {"/ST4_0.bin", "/ST4_1.bin"}, {"/ST5_0.bin"}, {"/ST6_0.bin"}, {"/ST7_0.bin", "/ST7_1.bin"},
-            new String[0], new String[0], {"/STA_0.bin", "/STA_1.bin"}, {"/STB_0.bin", "/STB_1.bin"},
-            {"/STC_0.bin", "/STC_1.bin"}, {"/STD_0.bin", "/STD_1.bin"}, {"/STE_0.bin"},
-            {"/STF_0.bin", "/STF_1.bin"}, {"/ST10_0.bin"}
+            {"/ST0_0.bin", "/ST0_1.bin"},    // Emerald Hill Act 1-2
+            {"/ST1_0.bin"},                  // Zone 1 (Used In Ending)
+            new String[0],                   // Zone 2 (Leftover From Genesis Version)
+            new String[0],                   // Zone 3 (Leftover From Genesis Version)
+            {"/ST4_0.bin", "/ST4_1.bin"},    // Metropolis Act 1-2 (Unused Here, Files Dont Exist)
+            {"/ST5_0.bin"},                  // Metropolis Act 3 (Unused Here, Files Dont Exist, Act 2 pointer removed from the Genesis version)
+            {"/ST6_0.bin"},                  // Wing Fortress (Unused Here, Files Dont Exist, Act 2 pointer removed from the Genesis version)
+            {"/ST7_0.bin", "/ST7_1.bin"},    // Hill Top Act 1-2
+            new String[0],                   // Zone 8 (Leftover From Genesis Version)
+            new String[0],                   // Zone 9 (Leftover From Genesis Version)
+            {"/STA_0.bin", "/STA_1.bin"},    // Oil Ocean Act 1-2 (Unused Here, Files Dont Exist)
+            {"/STB_0.bin", "/STB_1.bin"},    // Mystic Cave Act 1-2 (Unused Here, Files Dont Exist)
+            {"/STC_0.bin", "/STC_1.bin"},    // Casino Night Act 1-2
+            {"/STD_0.bin", "/STD_1.bin"},    // Chemical Plant Act 1-2
+            {"/STE_0.bin"},                  // Death Egg (Unused Here, Files Dont Exist, Act 2 pointer removed from the Genesis version)
+            {"/STF_0.bin", "/STF_1.bin"},    // Acuatic Ruin Act 1-2
+            {"/ST10_0.bin"}                  // Sky Chase (Unused Here, Files Dont Exist, Act 2 pointer removed from the Genesis version)
     };
-
+    // Rings Layout
     String[][] RING_FILENAME = new String[][]{
-            {"/ring0_0.bin", "/ring0_1.bin"}, new String[0], new String[0], new String[0],
-            {"/ring4_0.bin", "/ring4_1.bin"}, {"/ring5_0.bin"}, {"/ring6_0.bin"},
-            {"/ring7_0.bin", "/ring7_1.bin"}, new String[0], new String[0],
-            {"/ringA_0.bin", "/ringA_1.bin"}, {"/ringB_0.bin", "/ringB_1.bin"},
-            {"/ringC_0.bin", "/ringC_1.bin"}, {"/ringD_0.bin", "/ringD_1.bin"},
-            {"/ringE_0.bin"}, {"/ringF_0.bin", "/ringF_1.bin"}, {"/ring10_0.bin"}
+            {"/ring0_0.bin", "/ring0_1.bin"},  // Emerald Hill Act 1-2
+            new String[0],                     // Zone 1 (Used In Ending)
+            new String[0],                     // Zone 2 (Leftover From Genesis Version)
+            new String[0],                     // Zone 3 (Leftover From Genesis Version)
+            {"/ring4_0.bin", "/ring4_1.bin"},  // Metropolis Act 1-2 (Unused Here, Files Dont Exist)
+            {"/ring5_0.bin"},                  // Metropolis Act 3 (Unused Here, Files Dont Exist, Act 2 pointer removed from the Genesis version)
+            {"/ring6_0.bin"},                  // Wing Fortress (Unused Here, Files Dont Exist, Act 2 pointer removed from the Genesis version)
+            {"/ring7_0.bin", "/ring7_1.bin"},  // Hill Top Act 1-2
+            new String[0],                     // Zone 8 (Leftover From Genesis Version)
+            new String[0],                     // Zone 9 (Leftover From Genesis Version)
+            {"/ringA_0.bin", "/ringA_1.bin"},  // Oil Ocean Act 1-2 (Unused Here, Files Dont Exist)
+            {"/ringB_0.bin", "/ringB_1.bin"},  // Mystic Cave Act 1-2 (Unused Here, Files Dont Exist)
+            {"/ringC_0.bin", "/ringC_1.bin"},  // Casino Night Act 1-2
+            {"/ringD_0.bin", "/ringD_1.bin"},  // Chemical Plant Act 1-2
+            {"/ringE_0.bin"},                  // Death Egg (Unused Here, Files Dont Exist, Act 2 pointer removed from the Genesis version)
+            {"/ringF_0.bin", "/ringF_1.bin"},  // Acuatic Ruin Act 1-2
+            {"/ring10_0.bin"}                  // Sky Chase (Unused Here, Files Dont Exist, Act 2 pointer removed from the Genesis version)
     };
 
     int IMAGE_PLAYER_SONIC1 = 0;
