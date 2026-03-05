@@ -24,10 +24,82 @@ public class Sonic2AudioManager extends crlAudioManager implements PlayerListene
    public static final int AUDIO_SCORE = 10;
    public static final int AUDIO_DROWN = 11;
    public static final int NUM_OF_PLAYERS = 13;
-   private static final int[] a = new int[]{1, 5, 133, 132, 133, 133, 143, 5, 144, 141, 132, 139, 4, 2, 138, 3, 141};
-   private static final String[] b = new String[]{"/title.mid", "/emerald_hill.mid", "/chemical_plant.mid", "/aquatic_ruin.mid", "/casino_night.mid", "/hill_top.mid", "/boss.mid", "/stageclear.mid", "/hurry.mid", "/invincible.mid", "/1up.mid", "/gameover.mid", "/continue.mid", "/super_sonic.mid", "/score.mid", "/drown.mid", "/ring.mid", "/emerald_hill_intro.mid", "/chemical_plant_intro.mid", "/aquatic_ruin_intro.mid", "/casino_night_intro.mid", "/hill_top.mid", "/SEGA.amr"};
-   private static final int[] c = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0};
-   private static final int[] d = new int[]{1, -1, -1, -1, -1, -1, -1, 1, 1, -1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+   private static final int[] a = new int[]{
+           1,   // 0: Emerald Hill
+           5,   // 1: Zone 1 (Ending)
+           133, // 2: Zone 2 (Genesis leftover)
+           132, // 3: Zone 3 (Genesis leftover)
+           133, // 4: Metropolis
+           133, // 5: Metropolis Act 3
+           143, // 6: Wing Fortress
+           5,   // 7: Hill Top
+           144, // 8: Zone 8 (Genesis leftover)
+           141, // 9: Zone 9 (Genesis leftover)
+           132, // 10: Oil Ocean
+           23, // 11: Mystic Cave
+           4,   // 12: Casino Night
+           2,   // 13: Chemical Plant
+           138, // 14: Death Egg
+           3,   // 15: Aquatic Ruin
+           141  // 16: Sky Chase
+   };
+   private static final String[] b = new String[]{
+           "/title.mid",                  // [0]
+           "/emerald_hill.mid",           // [1]
+           "/chemical_plant.mid",         // [2]
+           "/aquatic_ruin.mid",           // [3]
+           "/casino_night.mid",           // [4]
+           "/hill_top.mid",               // [5]
+           "/boss.mid",                   // [6]
+           "/stageclear.mid",             // [7]
+           "/hurry.mid",                  // [8]
+           "/invincible.mid",             // [9]
+           "/1up.mid",                    // [10]
+           "/gameover.mid",               // [11]
+           "/continue.mid",               // [12]
+           "/super_sonic.mid",            // [13]
+           "/score.mid",                  // [14]
+           "/drown.mid",                  // [15]
+           "/ring.mid",                   // [16]
+           "/emerald_hill_intro.mid",     // [17] (Carga si pones 1 en array 'a')
+           "/chemical_plant_intro.mid",   // [18] (Carga si pones 2 en array 'a')
+           "/aquatic_ruin_intro.mid",     // [19] (Carga si pones 3 en array 'a')
+           "/casino_night_intro.mid",     // [20] (Carga si pones 4 en array 'a')
+           "/hill_top.mid",               // [21] (Carga si pones 5 en array 'a' - Reutilizado)
+           "/SEGA.amr",                   // [22]
+           "/mystic_cave_loop.mid",       // [23]
+           "", // [24]
+           "", // [25]
+           "", // [26]
+           "", // [27]
+           "", // [28]
+           "", // [29]
+           "", // [30]
+           "", // [31]
+           "", // [32]
+           "", // [33]
+           "", // [34]
+           "", // [35]
+           "", // [36]
+           "", // [37]
+           "", // [38]
+           "/mystic_cave_intro.mid", // [39]
+           "", // [40]
+           ""  // [41]
+   };
+    private static final int[] c = new int[]{
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, // 0 a 22
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1          // 23 a 41 (Todos son MIDI tipo 1)
+    };
+
+    // IMPORTANTE: Aquí definimos que el 23 loopea y el 39 NO para que salte al loop
+    private static final int[] d = new int[]{
+            1, -1, -1, -1, -1, -1, -1, 1, 1, -1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // 0 a 22
+            -1,                                                                          // [23] Mystic Cave LOOP (1 = Sí loopear)
+            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,                  // [24-38] Rellenos
+            1,                                                                         // [39] Mystic Cave INTRO (-1 = No loopear)
+            -1, -1                                                                      // [40-41]
+    };
    public static String[] audioBank;
    public static int[] audioBankAudioTypes;
    public static int[] audioBankLoopStates;

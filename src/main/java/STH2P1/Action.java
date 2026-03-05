@@ -573,7 +573,7 @@ public abstract class Action {
       case 218:
       case 219:
       default:
-         break;
+          break;
       case 8:
       case 10:
       case 37:
@@ -725,6 +725,9 @@ public abstract class Action {
          HillTopAction.prepareImages();
       default:
          return;
+      case 11:
+          MysticCaveAction.prepareImages();
+          return;
       case 13:
          ChemicalPlantAction.prepareImages();
          return;

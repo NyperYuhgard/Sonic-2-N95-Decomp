@@ -94,7 +94,7 @@ public interface Filenames {
             "",                    // Zone 8 Tiles (Leftover From Genesis Version)
             "",                    // Zone 9 Tiles (Leftover From Genesis Version)
             "",                    // Oil Ocean Tiles (Deleted)
-            "",                    // Mystic Cave Tiles (Deleted)
+            "/MYSTIC_CAVE.png",    // Mystic Cave Tiles (Deleted)
             "/CASINO_NIGHT.png",   // Casino Night Tiles 
             "/CHEMICAL_PLANT.png", // Chemical Plant Tiles
             "",                    // Death Egg Tiles (Deleted)

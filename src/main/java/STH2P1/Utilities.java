@@ -156,10 +156,15 @@ public class Utilities {
         }
     }
 
-   private static DataInputStream a(String var0) {
-      InputStream var1 = (new Object()).getClass().getResourceAsStream(var0);
-      return new DataInputStream(var1);
-   }
+    private static DataInputStream a(String var0) {
+        InputStream var1 = (new Object()).getClass().getResourceAsStream(var0);
+        if (var1 == null) {
+            System.out.println("!!! ARCHIVO NO ENCONTRADO: " + var0);
+            // Retornamos un stream vacío para que no lance NullPointerException
+            return new DataInputStream(new java.io.ByteArrayInputStream(new byte[0]));
+        }
+        return new DataInputStream(var1);
+    }
 
    private static void a(InputStream var0) {
       if (var0 != null) {

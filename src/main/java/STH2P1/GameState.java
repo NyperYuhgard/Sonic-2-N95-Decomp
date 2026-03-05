@@ -24,7 +24,7 @@ public class GameState extends State {
    private int a;
    public static int zoneNumber = 0;
    public static int actNumber = 0;
-   public static final int[] APP1_PROGRESS = new int[]{0, 13, 15, 12, 7};
+   public static final int[] APP1_PROGRESS = new int[]{11, 13, 15, 12, 7};
    public static final int[] APP2_PROGRESS = new int[]{11, 10, 4, 16, 6, 14};
    public static final int STRING_PAUSE = 0;
    protected static final int STRING_SELECT = 1;
@@ -109,9 +109,63 @@ public class GameState extends State {
    public static int m_GameFlag;
    private static final int[][] i = new int[][]{{210, 210, 210, 0, 0, 0, 0}, {0}, {0}, {0}, {0}, {0}, {0}, {157, 157, 157, 0, 0, 0, 0}, {0}, {0}, {0}, {0}, {748, 749, 750, 751, 752, 753, 754, 755, 756, 757, 758, 759, 59, 59, 59, 59, 59, 59, 59, 59}, {0}, {0}, {22, 23, 0, 0, 30, 31, 0, 0}, {0}};
    private static final int[] j = new int[]{761, 0, 0, 0, 742, 742, 0, 761, 0, 0, 756, 0, 748, 0, 767, 760, 0};
-   static final int[][] BGCOLOR = new int[][]{{128, 0, 0}, {224, 64, 32}, new int[0], new int[0], new int[0], new int[0], new int[0], {224, 64, 32}, new int[0], new int[0], new int[0], new int[0], {0, 0, 0}, {0, 0, 32}, new int[0], {0, 32, 0}, new int[0]};
-   protected static final int[][] PLAYER_START_POS_TBL = new int[][]{{96, 655, 96, 687}, {96, 180, 0, 0}, new int[0], new int[0], new int[0], new int[0], new int[0], {96, 1007, 96, 1711}, new int[0], new int[0], new int[0], new int[0], {96, 684, 96, 1420}, {96, 492, 96, 300}, new int[0], {96, 894, 96, 894}, new int[0]};
-   private static final int[][] k = new int[][]{{0, 10656, 0, 800, 0, 10560, 0, 1056}, {0, 3968, 0, 32}, new int[0], new int[0], new int[0], new int[0], new int[0], {0, 10240, 0, 1824, 0, 12928, 0, 1824}, new int[0], new int[0], new int[0], new int[0], {0, 10144, 0, 1824, 0, 10880, 0, 1824}, {0, 10112, 0, 1824, 0, 10880, 0, 1824}, new int[0], {0, 10432, 512, 1536, 0, 16383, 384, 1808}, new int[0]};
+    static final int[][] BGCOLOR = new int[][]{
+            {128, 0, 0},    // ID 00:
+            {224, 64, 32},  // ID 01:
+            {0, 0, 32},     // ID 02
+            new int[0],     // ID 03
+            {48, 14, 0},     // ID 04
+            {48, 14, 0},     // ID 05
+            {224, 64, 64},     // ID 06
+            {224, 64, 32},  // ID 07:
+            {128, 0, 0},     // ID 08
+            new int[0],     // ID 09
+            {0, 96, 224},     // ID 10
+            {43, 0, 40},     // ID 11:
+            {0, 0, 0},      // ID 12:
+            {0, 0, 32},     // ID 13:
+            {0, 0, 0},     // ID 14
+            {0, 32, 0},     // ID 15:
+            {224, 64, 64}      // ID 16:
+    };
+    protected static final int[][] PLAYER_START_POS_TBL = new int[][]{
+            {96, 655, 96, 687},   // ID 00:
+            {96, 180, 0, 0},      // ID 01:
+            new int[0],           // ID 02
+            new int[0],           // ID 03
+            {96, 652, 96, 1516},           // ID 04
+            {96, 524},           // ID 05
+            {96, 1228},           // ID 06
+            {96, 1007, 96, 1711}, // ID 07:
+            new int[0],           // ID 08
+            new int[0],           // ID 09
+            {96, 1708, 96, 1388},           // ID 10
+            {96, 1708, 96, 1452},           // ID 11:
+            {96, 684, 96, 1420},  // ID 12:
+            {96, 492, 96, 300},   // ID 13:
+            {96, 301},           // ID 14
+            {96, 894, 96, 894},   // ID 15:
+            {288, 112}            // ID 16:
+    };
+    private static final int[][] k = new int[][]{
+            {0, 10656, 0, 800, 0, 10560, 0, 1056},      // ID 00:
+            {0, 3968, 0, 32},                           // ID 01:
+            new int[0],                                 // ID 02
+            new int[0],                                 // ID 03
+            {0, 8832, 65280, 2048, 0, 7808, 65280, 2048},                                 // ID 04
+            {0, 10880, 65280, 2048},                                 // ID 05
+            {0, 16383, 0, 1824},                                 // ID 06
+            {0, 10240, 0, 1824, 0, 12928, 0, 1824},     // ID 07:
+            new int[0],                                 // ID 08
+            new int[0],                                 // ID 09
+            {0, 12160, 0, 1664, 0, 11520, 0, 1664},                                 // ID 10
+            {0, 9088, 960, 1824, 0, 16383, 96, 1824},                                 // ID 11:
+            {0, 10144, 0, 1824, 0, 10880, 0, 1824},     // ID 12:
+            {0, 10112, 0, 1824, 0, 10880, 0, 1824},     // ID 13:
+            {0, 4096, 200, 200},                                 // ID 14
+            {0, 10432, 512, 1536, 0, 16383, 384, 1808}, // ID 15:
+            {0, 16383, 0, 0}                                  // ID 16:
+    };
    private static final int[][] l = new int[][]{{8388608, 0}, {8388608, 0}, {8388608, 0}, {8388608, 0}, {8388608, 0}, {8388608, 0}, {8388608, 0}, {8388608, 0}, {8388608, 0}, {944242688, 15597568}, {545259520, 11796480}, {813694976, 17694720}, {1350565888, 29491200}, {1887436800, 41287680}, {8388608, 0}, {1073741824, 16646144}};
    private static final int[] m = new int[]{131072, 131072, 131072, 131072, 262144, 524288, 524288, 262144, 131072, 131072, 131072, 196608, 327680, 458752, 131072, 131072};
    private static final int[] n = new int[]{16, 24, 32, 48, 32, 8, 64, 64, 56, 56, 32, 48, 80, 112, 64, 64};
