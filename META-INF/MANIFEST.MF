@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+MIDlet-1: Sonic the Hedgehog 2 Dash,/icon.png,STH2P1.STH2P1
+MIDlet-Vendor: SEGA/BiNPDA
+MicroEdition-Configuration: CLDC-1.1
+MIDlet-Name: Sonic the Hedgehog 2 Dash
+MIDlet-Version: 1.0.0
+MicroEdition-Profile: MIDP-2.0
+

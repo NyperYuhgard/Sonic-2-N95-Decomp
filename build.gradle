@@ -28,7 +28,8 @@ tasks.withType(JavaCompile) {
 }
 
 jar {
-    archiveFileName = "Sonic2Dash.jar"
+    destinationDirectory = file("$projectDir/dist")
+    archiveFileName = "Sonic2C3.jar"
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
     // Incluimos los recursos (imágenes, sonidos, etc.) en el JAR

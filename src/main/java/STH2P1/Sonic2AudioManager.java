@@ -1,245 +1,232 @@
 package STH2P1;
 
 import Coral.Audio.crlAudioManager;
+import Coral.Util.crlBinArray;
+import java.io.DataInputStream;
+import java.io.InputStream;
 import javax.microedition.media.Player;
 import javax.microedition.media.PlayerListener;
 
 public class Sonic2AudioManager extends crlAudioManager implements PlayerListener {
-   public static final int VOLUME_QUART = 50;
-   public static final int VOLUME_HALF = 75;
-   public static final int[] VOLUME_LEVELS = new int[]{0, 50, 75, 100};
-   public static final int AUDIO_TITLE = 0;
-   public static final int AUDIO_RING = 1;
-   public static final int AUDIO_SEGA_SPLASH = 2;
-   public static final int AUDIO_ZONE_TRACK = 0;
-   public static final int AUDIO_ZONE_TRACK_INTRO = 1;
-   public static final int AUDIO_BOSS = 2;
-   public static final int AUDIO_STAGE_CLEAR = 3;
-   public static final int AUDIO_DROWN_PANIC = 4;
-   public static final int AUDIO_INVINCIBLE = 5;
-   public static final int AUDIO_EXTRA_LIFE = 6;
-   public static final int AUDIO_GAME_OVER = 7;
-   public static final int AUDIO_CONTINUE = 8;
-   public static final int AUDIO_SUPER_SONIC = 9;
-   public static final int AUDIO_SCORE = 10;
-   public static final int AUDIO_DROWN = 11;
-   public static final int NUM_OF_PLAYERS = 13;
-   private static final int[] a = new int[]{
-           1,   // 0: Emerald Hill
-           5,   // 1: Zone 1 (Ending)
-           133, // 2: Zone 2 (Genesis leftover)
-           132, // 3: Zone 3 (Genesis leftover)
-           133, // 4: Metropolis
-           133, // 5: Metropolis Act 3
-           143, // 6: Wing Fortress
-           5,   // 7: Hill Top
-           144, // 8: Zone 8 (Genesis leftover)
-           141, // 9: Zone 9 (Genesis leftover)
-           132, // 10: Oil Ocean
-           23, // 11: Mystic Cave
-           4,   // 12: Casino Night
-           2,   // 13: Chemical Plant
-           138, // 14: Death Egg
-           3,   // 15: Aquatic Ruin
-           141  // 16: Sky Chase
-   };
-   private static final String[] b = new String[]{
-           "/title.mid",                  // [0]
-           "/emerald_hill.mid",           // [1]
-           "/chemical_plant.mid",         // [2]
-           "/aquatic_ruin.mid",           // [3]
-           "/casino_night.mid",           // [4]
-           "/hill_top.mid",               // [5]
-           "/boss.mid",                   // [6]
-           "/stageclear.mid",             // [7]
-           "/hurry.mid",                  // [8]
-           "/invincible.mid",             // [9]
-           "/1up.mid",                    // [10]
-           "/gameover.mid",               // [11]
-           "/continue.mid",               // [12]
-           "/super_sonic.mid",            // [13]
-           "/score.mid",                  // [14]
-           "/drown.mid",                  // [15]
-           "/ring.mid",                   // [16]
-           "/emerald_hill_intro.mid",     // [17] (Carga si pones 1 en array 'a')
-           "/chemical_plant_intro.mid",   // [18] (Carga si pones 2 en array 'a')
-           "/aquatic_ruin_intro.mid",     // [19] (Carga si pones 3 en array 'a')
-           "/casino_night_intro.mid",     // [20] (Carga si pones 4 en array 'a')
-           "/hill_top.mid",               // [21] (Carga si pones 5 en array 'a' - Reutilizado)
-           "/SEGA.amr",                   // [22]
-           "/mystic_cave_loop.mid",       // [23]
-           "", // [24]
-           "", // [25]
-           "", // [26]
-           "", // [27]
-           "", // [28]
-           "", // [29]
-           "", // [30]
-           "", // [31]
-           "", // [32]
-           "", // [33]
-           "", // [34]
-           "", // [35]
-           "", // [36]
-           "", // [37]
-           "", // [38]
-           "/mystic_cave_intro.mid", // [39]
-           "", // [40]
-           ""  // [41]
-   };
-    private static final int[] c = new int[]{
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, // 0 a 22
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1          // 23 a 41 (Todos son MIDI tipo 1)
-    };
+    public static final int VOLUME_QUART = 50;
+    public static final int VOLUME_HALF = 75;
+    public static final int[] VOLUME_LEVELS = new int[]{0, 50, 75, 100};
+    public static final int NUM_OF_PLAYERS = 13;
 
-    // IMPORTANTE: Aquí definimos que el 23 loopea y el 39 NO para que salte al loop
-    private static final int[] d = new int[]{
-            1, -1, -1, -1, -1, -1, -1, 1, 1, -1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, // 0 a 22
-            -1,                                                                          // [23] Mystic Cave LOOP (1 = Sí loopear)
-            -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,                  // [24-38] Rellenos
-            1,                                                                         // [39] Mystic Cave INTRO (-1 = No loopear)
-            -1, -1                                                                      // [40-41]
-    };
-   public static String[] audioBank;
-   public static int[] audioBankAudioTypes;
-   public static int[] audioBankLoopStates;
+    // Arrays dinámicos para ahorrar RAM
+    public static int[] a;
+    public static String[] b;
+    public static int[] c;
+    public static int[] d;
 
-   public void setAudioBank(State var1) {
-      if (var1 instanceof TitleState) {
-         audioBank = new String[]{b[0], b[16], b[22]};
-         audioBankAudioTypes = new int[]{c[0], c[16], c[22]};
-         audioBankLoopStates = new int[]{d[0], d[16], d[22]};
-      } else {
-         if (var1 instanceof GameState) {
+    public static String[] audioBank;
+    public static int[] audioBankAudioTypes;
+    public static int[] audioBankLoopStates;
+
+    public void loadAudioData() {
+        System.out.println("AudioMgr: Iniciando carga de archivos binarios...");
+        try {
+            // Carga de Rutas (Array b)
+            InputStream isB = getClass().getResourceAsStream("/audio_b.bin");
+            if (isB != null) {
+                DataInputStream disB = new DataInputStream(isB);
+                int total = disB.readByte();
+                b = new String[42];
+                for (int i = 0; i < 42; i++) b[i] = "";
+                for (int i = 0; i < total; i++) {
+                    int idx = disB.readByte();
+                    int len = disB.readByte();
+                    byte[] buf = new byte[len];
+                    disB.read(buf);
+                    b[idx] = new String(buf, "UTF-8");
+                }
+                disB.close();
+                System.out.println("AudioMgr: Rutas 'b' cargadas correctamente.");
+            }
+
+            // Carga de Lógica (Arrays a, c, d)
+            InputStream isD = getClass().getResourceAsStream("/audio_data.bin");
+            if (isD != null) {
+                a = new int[17];
+                c = new int[42];
+                d = new int[42];
+                for (int i = 0; i < 17; i++) a[i] = isD.read();
+                for (int i = 0; i < 42; i++) c[i] = isD.read();
+                for (int i = 0; i < 42; i++) {
+                    int v = isD.read();
+                    d[i] = (v == 255) ? -1 : v;
+                }
+                isD.close();
+                System.out.println("AudioMgr: Tablas numericas cargadas.");
+            }
+        } catch (Exception e) {
+            System.out.println("AudioMgr ERROR en loadAudioData: " + e.getMessage());
+        }
+    }
+
+    public void setAudioBank(State var1) {
+        this.clearAllPlayers();
+        if (b == null) loadAudioData();
+
+        if (var1 instanceof TitleState) {
+            audioBank = new String[]{b[0], b[16], b[22]};
+            audioBankAudioTypes = new int[]{c[0], c[16], c[22]};
+            audioBankLoopStates = new int[]{d[0], d[16], d[22]};
+        } else if (var1 instanceof GameState) {
             audioBank = new String[13];
             audioBankAudioTypes = new int[13];
             audioBankLoopStates = new int[13];
             int var3 = a[GameState.zoneNumber];
-            this.a(0, var3);
-            int var2 = audioBank.length;
-            this.a(1, var3 + 16);
 
-            for(var3 = 2; var3 < var2; ++var3) {
-               this.a(var3, var3 + 4);
+            System.out.println("AudioMgr: Configurando banco para Zona " + GameState.zoneNumber);
+
+            this.a(0, var3);      // Slot 0: Track Principal (Loop)
+            this.a(1, var3 + 16); // Slot 1: Intro
+
+            for(int i = 2; i < 13; ++i) {
+                this.a(i, i + 4);
             }
-         }
+        }
+    }
 
-      }
-   }
+    private void a(int slot, int idx) {
+        if (idx < b.length) {
+            audioBank[slot] = b[idx];
+            audioBankAudioTypes[slot] = c[idx];
+            audioBankLoopStates[slot] = d[idx];
+            System.out.println("AudioMgr: Slot " + slot + " cargado con " + b[idx]);
+        }
+    }
 
-   private void a(int var1, int var2) {
-      audioBank[var1] = b[var2];
-      audioBankAudioTypes[var1] = c[var2];
-      audioBankLoopStates[var1] = d[var2];
-   }
+    public void bgmset(int var1) {
+        System.out.println("AudioMgr C3: Preparando Slot " + var1);
 
-   public void bgmset(int var1) {
-      this.playAudio(var1, audioBankLoopStates[var1]);
-   }
+        // 1. Matar cualquier player que esté usando el recurso actualmente
+        this.clearAllPlayers();
 
-   public void bgmRestart() {
-      this.bgmset(0);
-   }
-
-   public void activeAudioBankListener() {
-      for(int var1 = 0; var1 < super._mNumPlayers; ++var1) {
-         super._mPlayer[var1].addPlayerListener(this);
-      }
-
-   }
-
-   public void playerUpdate(Player var1, String var2, Object var3) {
-      try {
-         if (var1.equals(super._mPlayer[1]) && var2.equals("endOfMedia")) {
-            this.bgmRestart();
-         } else {
-            if (var1.equals(super._mPlayer[6]) && var2.equals("endOfMedia")) {
-               if (!GameState.stageClear) {
-                  if (State.mSonicAction.m_AirCnt < 12) {
-                     cCanvas.am.bgmset(4);
-                  } else {
-                     byte var5 = 0;
-                     if ((State.mSonicAction.m_PlPower & 2) != 0) {
-                        var5 = 5;
-                     }
-
-                     if (GameState.m_SSonicFlag != 0) {
-                        var5 = 9;
-                     }
-
-                     if (GameState.m_BossStart != 0) {
-                        var5 = 2;
-                     }
-
-                     cCanvas.am.bgmset(var5);
-                  }
-
-                  return;
-               }
-
-               if (GameState.stageClearExtraLifeAudioRequired == 0) {
-                  GameState.stageClearNextStage = true;
-                  return;
-               }
-
-               if (GameState.stageClearExtraLifeAudioRequired > 0) {
-                  this.bgmset(6);
-                  --GameState.stageClearExtraLifeAudioRequired;
-                  return;
-               }
-            } else {
-               if (var1.equals(super._mPlayer[3]) && var2.equals("endOfMedia")) {
-                  PlayerAction2.stclearAudioOver = true;
-                  return;
-               }
-
-               if (var1.equals(super._mPlayer[10]) && var2.equals("endOfMedia")) {
-                  if (GameState.stageClearExtraLifeAudioRequired == 0) {
-                     GameState.stageClearNextStage = true;
-                     return;
-                  }
-
-                  if (GameState.stageClearExtraLifeAudioRequired > 0) {
-                     this.bgmset(6);
-                     --GameState.stageClearExtraLifeAudioRequired;
-                  }
-               }
+        // 2. Intentar inicializar solo el player que necesitamos (Lazy Load)
+        // d(var1) crea el Player, e(var1) hace prefetch
+        if (this.d(var1) == 0) {
+            if (this.e(var1) == 0) {
+                // 3. Activar listener y reproducir
+                if (super._mPlayer[var1] != null) {
+                    super._mPlayer[var1].addPlayerListener(this);
+                }
+                this.playAudio(var1, audioBankLoopStates[var1]);
             }
+        }
+    }
 
-            return;
-         }
-      } catch (Throwable var4) {
-      }
+    public void bgmRestart() {
+        System.out.println("AudioMgr: Intro finalizada. Saltando al Loop (Slot 0)");
+        this.bgmset(0);
+    }
 
-   }
+    public void activeAudioBankListener() {
+        for(int i = 0; i < super._mNumPlayers; ++i) {
+            if (super._mPlayer[i] != null) {
+                super._mPlayer[i].addPlayerListener(this);
+            }
+        }
+    }
 
-   public void setGlobalVolume(int var1, boolean var2) {
-      if (var1 <= 100 && var1 >= 0) {
-         crlAudioManager._gGlobalVolume = var1;
-      }
+    public void playerUpdate(Player var1, String var2, Object var3) {
+        try {
+            if (var2.equals("endOfMedia")) {
+                if (var1.equals(super._mPlayer[1])) {
+                    this.bgmRestart();
+                } else if (var1.equals(super._mPlayer[6])) {
+                    if (!GameState.stageClear) {
+                        if (State.mSonicAction.m_AirCnt < 12) {
+                            this.bgmset(4);
+                        } else {
+                            int track = 0;
+                            if ((State.mSonicAction.m_PlPower & 2) != 0) track = 5;
+                            if (GameState.m_SSonicFlag != 0) track = 9;
+                            if (GameState.m_BossStart != 0) track = 2;
+                            this.bgmset(track);
+                        }
+                    } else {
+                        if (GameState.stageClearExtraLifeAudioRequired == 0) {
+                            GameState.stageClearNextStage = true;
+                        } else {
+                            this.bgmset(6);
+                            --GameState.stageClearExtraLifeAudioRequired;
+                        }
+                    }
+                } else if (var1.equals(super._mPlayer[3])) {
+                    PlayerAction2.stclearAudioOver = true;
+                } else if (var1.equals(super._mPlayer[10])) {
+                    if (GameState.stageClearExtraLifeAudioRequired == 0) {
+                        GameState.stageClearNextStage = true;
+                    } else {
+                        this.bgmset(6);
+                        --GameState.stageClearExtraLifeAudioRequired;
+                    }
+                }
+            }
+        } catch (Throwable t) {}
+    }
 
-      if (var2) {
-         for(var1 = 0; var1 < super._mPlayer.length; ++var1) {
-            super._mPlayerVolume[var1] = crlAudioManager._gGlobalVolume;
-         }
-      }
+    public void setGlobalVolume(int var1, boolean var2) {
+        if (var1 <= 100 && var1 >= 0) crlAudioManager._gGlobalVolume = var1;
+        if (var2) {
+            for(int i = 0; i < super._mPlayer.length; ++i) {
+                super._mPlayerVolume[i] = crlAudioManager._gGlobalVolume;
+            }
+        }
+    }
 
-   }
+    public boolean audioPlaying() {
+        for(int i = 0; i < super._mPlayer.length; ++i) {
+            if (this.isStarted(i)) return true;
+        }
+        return false;
+    }
 
-   public boolean audioPlaying() {
-      boolean var1 = false;
+    /**
+     * Versión optimizada para C3:
+     * Registra las rutas pero NO crea los objetos Player de golpe.
+     */
+    public int loadCurrentAudioBank() {
+        if (audioBank == null) return -1;
 
-      for(int var2 = 0; var2 < super._mPlayer.length; ++var2) {
-         if (this.isStarted(var2)) {
-            var1 = true;
-            break;
-         }
-      }
+        System.out.println("AudioMgr C3: Cargando banco de audios en memoria...");
+        this.removeAudioBank(); // Limpia arrays internos de la clase padre
 
-      return var1;
-   }
+        for (int i = 0; i < audioBank.length; i++) {
+            try {
+                if (audioBank[i] == null || audioBank[i].equals("")) continue;
 
-   public int loadCurrentAudioBank() {
-      return audioBank != null && audioBankAudioTypes != null ? this.loadAudioBank(audioBank, audioBankAudioTypes) : -1;
-   }
+                super.f[i] = audioBankAudioTypes[i];
+                InputStream is = this.getClass().getResourceAsStream(audioBank[i]);
+                if (is != null) {
+                    byte[] buf = new byte[is.available()];
+                    is.read(buf);
+                    is.close();
+
+                    crlBinArray bin = new crlBinArray();
+                    bin.set(buf, 0, buf.length);
+                    super.e[i] = bin; // Guardamos solo los bytes
+                }
+            } catch (Exception ex) {
+                System.out.println("Error cargando slot " + i);
+            }
+        }
+        this._mNumPlayers = audioBank.length;
+        return 0;
+    }
+
+    public void clearAllPlayers() {
+        for (int i = 0; i < super._mPlayer.length; i++) {
+            if (super._mPlayer[i] != null) {
+                try {
+                    super._mPlayer[i].stop();
+                    super._mPlayer[i].deallocate();
+                    super._mPlayer[i].close();
+                    super._mPlayer[i] = null;
+                } catch (Exception e) {}
+            }
+        }
+    }
 }

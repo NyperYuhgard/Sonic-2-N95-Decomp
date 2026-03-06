@@ -23,8 +23,8 @@ public class crlAudioManager extends crlManagerBase implements iAudio {
    protected Player[] _mPlayer;
    private VolumeControl[] c;
    private int[] d;
-   private crlBinArray[] e;
-   private int[] f;
+   public crlBinArray[] e;
+   public int[] f;
    private int[] g;
    protected int[] _mPlayerVolume;
    protected int _mNumPlayers;
@@ -569,7 +569,7 @@ public class crlAudioManager extends crlManagerBase implements iAudio {
       return var1 == -1 || var1 >= this._mNumPlayers || this._mPlayer[var1] == null || (this.d[var1] != 8 || this.g[var1] != -1) && this._mPlayer[var1].getState() != 400;
    }
 
-   private int d(int var1) {
+   public int d(int var1) {
       try {
          ByteArrayInputStream var2 = new ByteArrayInputStream(this.e[var1].getArray(), this.e[var1].getOffset(), this.e[var1].getLength());
          this._mPlayer[var1] = Manager.createPlayer(var2, a[this.f[var1]]);
@@ -583,7 +583,7 @@ public class crlAudioManager extends crlManagerBase implements iAudio {
       }
    }
 
-   private int e(int var1) {
+   public int e(int var1) {
       if (!this.a(var1) && this.d(var1) == -1) {
          return -1;
       } else {
