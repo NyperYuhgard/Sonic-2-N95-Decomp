@@ -68,6 +68,7 @@ public abstract class crlCanvas extends GameCanvas implements Runnable {
     public static String _mUpsellSplash;
     public static boolean _mTriggerPaintUI;
 
+    // Offscreen buffer for scaling (Nokia C3 Fix)
     public static Image _mOffscreenBuffer;
 
     public crlCanvas() {
@@ -98,10 +99,11 @@ public abstract class crlCanvas extends GameCanvas implements Runnable {
         crlUtil.garbageWait();
         gDisplay = Display.getDisplay(var1);
 
-        // Lógica interna: 240x320
+        // Internal logic: 240x320 (Portrait)
         _mWidth = 240;
         _mHeight = 320;
 
+        // Create the drawing buffer
         try {
             _mOffscreenBuffer = Image.createImage(_mWidth, _mHeight);
             _mGraphics = _mOffscreenBuffer.getGraphics();
@@ -167,31 +169,31 @@ public abstract class crlCanvas extends GameCanvas implements Runnable {
         if (_mPaintFinished && _mOffscreenBuffer != null) {
             _mPaintFinished = false;
 
-            // 1. Renderizamos el juego en el buffer de 240x320
+            // 1. Render the game into the 240x320 buffer
             this.render(_mGraphics);
 
             Graphics gReal = this.getGraphics();
-            int screenW = this.getWidth();  // 320
-            int screenH = this.getHeight(); // 240
+            int screenW = this.getWidth();  // 320 (C3 Landscape)
+            int screenH = this.getHeight(); // 240 (C3 Landscape)
 
-            // 2. ESCALADO POR PÍXELES (Nearest Neighbor)
-            // Creamos un array para volcar una línea de píxeles
+            // 2. PIXEL SCALING (Nearest Neighbor)
+            // Create arrays to hold pixel lines
             int[] rawPixels = new int[240];
             int[] scaledLine = new int[320];
 
             for (int i = 0; i < screenH; i++) {
-                // Buscamos la fila correspondiente en la imagen original
+                // Find the corresponding row in the original image
                 int srcY = (i * 320) / screenH;
 
-                // Extraemos los píxeles de la fila original
+                // Extract pixels from the original row
                 _mOffscreenBuffer.getRGB(rawPixels, 0, 240, 0, srcY, 240, 1);
 
-                // Estiramos la fila de 240 a 320
+                // Stretch the row from 240 to 320
                 for (int x = 0; x < 320; x++) {
                     scaledLine[x] = rawPixels[(x * 240) / 320];
                 }
 
-                // Dibujamos la línea estirada directamente en la pantalla física
+                // Draw the stretched line directly onto the physical screen
                 gReal.drawRGB(scaledLine, 0, 320, 0, i, 320, 1, false);
             }
 
